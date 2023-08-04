@@ -4,6 +4,8 @@ import Button from '../components/ui/Button';
 import Title from '../components/ui/Title';
 import NumberContainer from '../components/game/NumberContainer';
 import Card from '../components/ui/Card';
+import RowWrapper from '../components/ui/RowWrapper';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 let minBoundary = 1;
 let maxBoundary = 100;
@@ -60,14 +62,18 @@ const GameScreen = ({userNumber, onGameOver}) => {
       <NumberContainer>{currentGuess}</NumberContainer>
       <Card>
         <Text style={styles.text}>Higher or lower?</Text>
-        <View>
-          <View>
-            <Button onPressHandler={() => getNextGuess('greater')}>+</Button>
+        <RowWrapper>
+          <View style={styles.button}>
+            <Button onPressHandler={() => getNextGuess('greater')}>
+              <Ionicons name="add-sharp" size={24} />
+            </Button>
           </View>
-          <View>
-            <Button onPressHandler={() => getNextGuess('lower')}>-</Button>
+          <View style={styles.button}>
+            <Button onPressHandler={() => getNextGuess('lower')}>
+              <Ionicons name="remove-sharp" size={24} />
+            </Button>
           </View>
-        </View>
+        </RowWrapper>
       </Card>
     </View>
   );
@@ -84,5 +90,8 @@ const styles = StyleSheet.create({
     color: 'white',
     paddingBottom: 10,
     fontSize: 20,
+  },
+  button: {
+    flex: 1,
   },
 });
