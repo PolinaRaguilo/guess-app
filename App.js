@@ -9,26 +9,39 @@ import GameOverScreen from './screens/GameOverScreen';
 const App = () => {
   const [userNumber, setUserNumber] = useState();
   const [isGameOver, setIsGameOver] = useState(true);
+  const [roundsNumber, setRoundsNumber] = useState(0);
 
   const getUserNumber = number => {
     setUserNumber(number);
     setIsGameOver(false);
   };
 
-  const hameOverHandler = () => {
+  const gameOverHandler = number => {
     setIsGameOver(true);
+    setRoundsNumber(number);
+  };
+
+  const onStartNewGame = () => {
+    setUserNumber(null);
+    setRoundsNumber(0);
   };
 
   let screen = <StartGameScreen getUserNumber={getUserNumber} />;
 
   if (userNumber) {
     screen = (
-      <GameScreen userNumber={userNumber} onGameOver={hameOverHandler} />
+      <GameScreen userNumber={userNumber} onGameOver={gameOverHandler} />
     );
   }
 
   if (isGameOver && userNumber) {
-    screen = <GameOverScreen />;
+    screen = (
+      <GameOverScreen
+        userNumber={userNumber}
+        roundsNumber={roundsNumber}
+        onRestart={onStartNewGame}
+      />
+    );
   }
 
   return (

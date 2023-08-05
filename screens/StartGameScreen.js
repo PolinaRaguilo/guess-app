@@ -67,6 +67,7 @@ const styles = StyleSheet.create({
   inputLabel: {
     color: Colors.secondary1,
     fontSize: 24,
+    fontFamily: 'OpenSans-Bold',
   },
 
   numberInput: {
