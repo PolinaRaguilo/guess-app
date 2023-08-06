@@ -1,5 +1,14 @@
 import React, {useState} from 'react';
-import {Alert, StyleSheet, Text, TextInput, View} from 'react-native';
+import {
+  Alert,
+  KeyboardAvoidingView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+  useWindowDimensions,
+} from 'react-native';
 import Button from '../components/ui/Button';
 import Colors from '../utils/colors';
 import Title from '../components/ui/Title';
@@ -7,6 +16,8 @@ import Card from '../components/ui/Card';
 
 const StartGameScreen = ({getUserNumber}) => {
   const [enteredValue, setEnteredValue] = useState('');
+
+  const {height} = useWindowDimensions();
 
   const enterHandler = enteredText => {
     setEnteredValue(enteredText);
@@ -31,37 +42,48 @@ const StartGameScreen = ({getUserNumber}) => {
     getUserNumber(chosenNumber);
   };
 
+  const marginTopDistance = height < 400 ? 30 : 100;
+
   return (
-    <View style={styles.screenWrapper}>
-      <Title>Guess My Number</Title>
-      <Card>
-        <Text style={styles.inputLabel}>Enter a number</Text>
-        <TextInput
-          style={styles.numberInput}
-          maxLength={2}
-          keyboardType="number-pad"
-          autoCapitalize="none"
-          autoCorrect={false}
-          value={enteredValue}
-          onChangeText={enterHandler}
-        />
-        <View style={styles.buttonsWrapper}>
-          <View style={styles.button}>
-            <Button onPressHandler={() => setEnteredValue('')}>Reset</Button>
-          </View>
-          <View style={styles.button}>
-            <Button onPressHandler={confirmHandler}>Confirm</Button>
-          </View>
+    <ScrollView style={styles.screen}>
+      <KeyboardAvoidingView style={styles.screen} behavior="position">
+        <View style={[styles.screenWrapper, {marginTop: marginTopDistance}]}>
+          <Title>Guess My Number</Title>
+          <Card>
+            <Text style={styles.inputLabel}>Enter a number</Text>
+            <TextInput
+              style={styles.numberInput}
+              maxLength={2}
+              keyboardType="number-pad"
+              autoCapitalize="none"
+              autoCorrect={false}
+              value={enteredValue}
+              onChangeText={enterHandler}
+            />
+            <View style={styles.buttonsWrapper}>
+              <View style={styles.button}>
+                <Button onPressHandler={() => setEnteredValue('')}>
+                  Reset
+                </Button>
+              </View>
+              <View style={styles.button}>
+                <Button onPressHandler={confirmHandler}>Confirm</Button>
+              </View>
+            </View>
+          </Card>
         </View>
-      </Card>
-    </View>
+      </KeyboardAvoidingView>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+  },
   screenWrapper: {
     flex: 1,
-    marginTop: 100,
+    // marginTop: deviceHight < 400 ? 30 : 100,
     alignItems: 'center',
   },
   inputLabel: {

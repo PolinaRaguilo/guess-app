@@ -108,6 +108,7 @@ const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
     padding: 24,
+    alignItems: 'center',
   },
   text: {
     color: 'white',
